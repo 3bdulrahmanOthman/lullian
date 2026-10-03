@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:tool-provenance:v2",
+  "title": "Lullian Tool Provenance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "kind",
+    "canonicalUrl",
+    "owner",
+    "versionOrRevision",
+    "retrievedAt",
+    "contentHash",
+    "provenanceStrength"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "SKILL",
+        "MCP",
+        "PACKAGE",
+        "CLI",
+        "SERVICE",
+        "OTHER"
+      ]
+    },
+    "canonicalUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "versionOrRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retrievedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "contentHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packageIdentity": {
+      "type": "string",
+      "minLength": 1
+    },
+    "signatureRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenanceStrength": {
+      "enum": [
+        "SIGNED_RELEASE",
+        "PINNED_CANONICAL_REVISION",
+        "CANONICAL_TAG",
+        "CANONICAL_REPO_UNPINNED",
+        "UNVERIFIED"
+      ]
+    },
+    "sourceNotes": {
+      "type": "string"
+    },
+    "subjectType": {
+      "enum": [
+        "DIRECTORY",
+        "ARCHIVE",
+        "PACKAGE",
+        "BINARY",
+        "MCP_SERVER",
+        "SERVICE",
+        "OTHER"
+      ]
+    },
+    "artifactDigest": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "sourceRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "distributionRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "buildProvenanceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "subjectType": {
+            "enum": [
+              "DIRECTORY",
+              "ARCHIVE",
+              "PACKAGE",
+              "BINARY",
+              "MCP_SERVER"
+            ]
+          }
+        },
+        "required": [
+          "subjectType"
+        ]
+      },
+      "then": {
+        "required": [
+          "artifactDigest"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenanceStrength": {
+            "const": "SIGNED_RELEASE"
+          }
+        },
+        "required": [
+          "provenanceStrength"
+        ]
+      },
+      "then": {
+        "required": [
+          "signatureRef"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenanceStrength": {
+            "const": "UNVERIFIED"
+          }
+        },
+        "required": [
+          "provenanceStrength"
+        ]
+      },
+      "then": {
+        "required": [
+          "sourceNotes"
+        ]
+      }
+    }
+  ]
+}

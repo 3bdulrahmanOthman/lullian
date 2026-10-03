@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:cross-cutting-concern:v1",
+  "title": "Lullian Cross-Cutting Concern",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "concern",
+    "status",
+    "rationale"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "concern": {
+      "enum": [
+        "security",
+        "privacy",
+        "accessibility",
+        "reliability",
+        "availability",
+        "performance",
+        "scalability",
+        "observability",
+        "operability",
+        "compliance_legal",
+        "cost",
+        "maintainability",
+        "internationalization",
+        "retention",
+        "backup_recovery",
+        "other"
+      ]
+    },
+    "status": {
+      "enum": [
+        "material",
+        "not_material",
+        "unknown"
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirementsRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "mitigations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "acceptanceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources."
+}

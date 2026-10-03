@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:project-state:v2",
+  "title": "Lullian Project State v0.4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "project",
+    "readiness",
+    "readinessSummary"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "2"
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "mode"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "greenfield",
+            "brownfield",
+            "hybrid"
+          ]
+        }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "research": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "architecture": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "technologyDecisions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "workflow": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "traceLinks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "concerns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "spikes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "staleRecords": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "qualityAttributes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "artifactDependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "toolSnapshots": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "readiness": {
+      "enum": [
+        "READY",
+        "READY_WITH_SPIKES",
+        "NEEDS_CLARIFICATION",
+        "NOT_READY"
+      ]
+    },
+    "lastCheckpointAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "readinessSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blockingUnknowns",
+        "unresolvedMustRequirements",
+        "unapprovedTools",
+        "staleRecords",
+        "missingCanonicalDocs",
+        "pendingApprovals",
+        "blockingSpikes"
+      ],
+      "properties": {
+        "blockingUnknowns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unresolvedMustRequirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unapprovedTools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "staleRecords": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "missingCanonicalDocs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "pendingApprovals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "blockingSpikes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "toolScopes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "admissionPlans": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "installationVerifications": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "dependencyAudits": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "mcpSurfaces": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "capabilityInteractions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "toolLifecycleEvents": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "governanceRevision": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "readiness": {
+            "const": "READY"
+          }
+        },
+        "required": [
+          "readiness"
+        ]
+      },
+      "then": {
+        "properties": {
+          "blockers": {
+            "maxItems": 0
+          },
+          "spikes": {
+            "maxItems": 0
+          },
+          "staleRecords": {
+            "maxItems": 0
+          },
+          "unknowns": {
+            "maxItems": 0
+          },
+          "readinessSummary": {
+            "properties": {
+              "blockingUnknowns": {
+                "maxItems": 0
+              },
+              "unresolvedMustRequirements": {
+                "maxItems": 0
+              },
+              "unapprovedTools": {
+                "maxItems": 0
+              },
+              "staleRecords": {
+                "maxItems": 0
+              },
+              "missingCanonicalDocs": {
+                "maxItems": 0
+              },
+              "pendingApprovals": {
+                "maxItems": 0
+              },
+              "blockingSpikes": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "readiness": {
+            "const": "READY_WITH_SPIKES"
+          }
+        },
+        "required": [
+          "readiness"
+        ]
+      },
+      "then": {
+        "required": [
+          "spikes"
+        ],
+        "properties": {
+          "spikes": {
+            "minItems": 1
+          },
+          "blockers": {
+            "maxItems": 0
+          },
+          "staleRecords": {
+            "maxItems": 0
+          },
+          "readinessSummary": {
+            "properties": {
+              "blockingUnknowns": {
+                "maxItems": 0
+              },
+              "unresolvedMustRequirements": {
+                "maxItems": 0
+              },
+              "unapprovedTools": {
+                "maxItems": 0
+              },
+              "staleRecords": {
+                "maxItems": 0
+              },
+              "missingCanonicalDocs": {
+                "maxItems": 0
+              },
+              "pendingApprovals": {
+                "maxItems": 0
+              },
+              "blockingSpikes": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

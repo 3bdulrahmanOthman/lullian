@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:workflow:v1",
+  "title": "Lullian Workflow Recommendation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "engineering",
+    "depth",
+    "reason"
+  ],
+  "properties": {
+    "engineering": {
+      "enum": [
+        "JSM",
+        "SPEC_KIT",
+        "LIGHTWEIGHT_CUSTOM",
+        "OTHER"
+      ]
+    },
+    "design": {
+      "type": "string",
+      "minLength": 1
+    },
+    "research": {
+      "type": "string",
+      "minLength": 1
+    },
+    "browserValidation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "depth": {
+      "enum": [
+        "PROTOTYPE",
+        "ALPHA",
+        "BETA",
+        "GA",
+        "CUSTOM"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "RECOMMENDED",
+        "CONDITIONAL",
+        "DEFERRED"
+      ]
+    },
+    "requiredArtifacts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reviewCadence": {
+      "type": "string",
+      "minLength": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources."
+}

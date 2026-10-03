@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:assessment:v1",
+  "title": "Lullian Optional Assessment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "rationale"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "PROCEED",
+        "CLARIFY",
+        "DEFER",
+        "STOP"
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "DEFER",
+              "STOP"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "evidenceRefs",
+          "conditions"
+        ]
+      }
+    }
+  ]
+}

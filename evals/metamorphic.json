@@ -1,0 +1,148 @@
+[
+  {
+    "id": "change-payment-provider",
+    "input_change": "Change payment provider constraint from A to B.",
+    "expected_local_changes": [
+      "payment technology decision",
+      "integration boundary",
+      "relevant requirements",
+      "toolchain/API docs",
+      "handoff spikes if any"
+    ],
+    "must_not_change": [
+      "unrelated UI preferences",
+      "unrelated domain entities",
+      "unrelated test assumptions"
+    ],
+    "category": "CORE",
+    "scope": [
+      "project"
+    ]
+  },
+  {
+    "id": "lock-decision",
+    "input_change": "Change a decision from PROPOSED to LOCKED with explicit approval.",
+    "expected_local_changes": [
+      "decision status",
+      "approval fields",
+      "dependent readiness where applicable"
+    ],
+    "must_not_change": [
+      "original evidence",
+      "historical decision text",
+      "unrelated decisions"
+    ],
+    "category": "CORE",
+    "scope": [
+      "project"
+    ]
+  },
+  {
+    "id": "new-security-finding",
+    "input_change": "A rescanned Skill now has a HIGH finding.",
+    "expected_local_changes": [
+      "tool security review",
+      "tool status",
+      "handoff security blockers",
+      "affected workflow/toolchain docs"
+    ],
+    "must_not_change": [
+      "unrelated architecture decisions"
+    ],
+    "category": "CORE",
+    "scope": [
+      "project"
+    ]
+  },
+  {
+    "id": "brownfield-fact-correction",
+    "input_change": "Repository inspection disproves an earlier REPO_FACT.",
+    "expected_local_changes": [
+      "evidence status",
+      "dependent assumptions/decisions",
+      "affected docs"
+    ],
+    "must_not_change": [
+      "user intent records",
+      "independent external evidence"
+    ],
+    "category": "CORE",
+    "scope": [
+      "project"
+    ]
+  },
+  {
+    "id": "change-tool-scope",
+    "input_change": "Change an approved tool scope by adding one capability.",
+    "expected_local_changes": [
+      "tool scope",
+      "admission plan",
+      "approval",
+      "lifecycle event"
+    ],
+    "must_not_change": [
+      "unrelated requirements",
+      "unrelated tools"
+    ],
+    "category": "GOVERNANCE",
+    "scope": [
+      "tool",
+      "scope",
+      "admission"
+    ]
+  },
+  {
+    "id": "change-lockfile",
+    "input_change": "Change a dependency lockfile hash for one tool.",
+    "expected_local_changes": [
+      "dependency audit",
+      "admission plan",
+      "approval"
+    ],
+    "must_not_change": [
+      "unrelated tool admissions",
+      "unrelated architecture decisions"
+    ],
+    "category": "GOVERNANCE",
+    "scope": [
+      "dependency",
+      "admission"
+    ]
+  },
+  {
+    "id": "change-mcp-surface",
+    "input_change": "Change one MCP tool definition hash.",
+    "expected_local_changes": [
+      "mcp surface",
+      "admission plan",
+      "approval",
+      "lifecycle event"
+    ],
+    "must_not_change": [
+      "unrelated project decisions",
+      "unrelated tools"
+    ],
+    "category": "GOVERNANCE",
+    "scope": [
+      "mcp",
+      "admission"
+    ]
+  },
+  {
+    "id": "change-unrelated-requirement",
+    "input_change": "Change a requirement unrelated to a tool admission.",
+    "expected_local_changes": [
+      "affected requirement dependents"
+    ],
+    "must_not_change": [
+      "unrelated tool scope",
+      "unrelated admission plan",
+      "unrelated approval"
+    ],
+    "category": "GOVERNANCE",
+    "scope": [
+      "requirement",
+      "locality"
+    ]
+  }
+]

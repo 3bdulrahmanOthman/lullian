@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:tool-snapshot:v2",
+  "title": "Lullian Tool Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "target",
+    "capturedAt",
+    "contentHash",
+    "snapshotArchiveHash",
+    "snapshotArchiveRef",
+    "scannerTrustHash",
+    "sourceRef",
+    "changePolicy",
+    "subjectIdentityHash"
+  ],
+  "properties": {
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capturedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "contentHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "snapshotArchiveHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "snapshotArchiveRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "toolDefinitionsHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "permissionHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "scannerTrustHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "changePolicy": {
+      "enum": [
+        "RESCAN_ON_ANY_CHANGE",
+        "RESCAN_ON_MATERIAL_CHANGE"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dependencyGraphHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "capabilityHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "scopeHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "mcpSurfaceHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "snapshotSchemaVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subjectIdentityHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    }
+  }
+}

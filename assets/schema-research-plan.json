@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:research-plan:v1",
+  "title": "Lullian Research Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "question",
+    "evidenceTarget",
+    "depth",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidenceTarget": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceClasses": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "OFFICIAL_SOURCE",
+          "TRUSTED_SECONDARY"
+        ]
+      }
+    },
+    "freshness": {
+      "enum": [
+        "LIVE",
+        "CURRENT",
+        "RECENT",
+        "EVERGREEN"
+      ]
+    },
+    "depth": {
+      "enum": [
+        "LITE",
+        "STANDARD",
+        "DEEP"
+      ]
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxQueries": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxSources": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxMinutes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "maxQueries",
+        "maxSources",
+        "maxMinutes"
+      ]
+    },
+    "status": {
+      "enum": [
+        "PLANNED",
+        "RUNNING",
+        "COMPLETE",
+        "BLOCKED",
+        "STALE"
+      ]
+    },
+    "decisionDependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "disconfirmingEvidenceRequired": {
+      "type": "boolean"
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources."
+}

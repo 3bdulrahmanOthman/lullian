@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:artifact-dependency:v2",
+  "title": "Lullian Artifact Dependency",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "from",
+    "to",
+    "relation"
+  ],
+  "properties": {
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relation": {
+      "enum": [
+        "DEPENDS_ON",
+        "INVALIDATES",
+        "DERIVED_FROM",
+        "GENERATED_FROM",
+        "SUPPLY_CHAIN_OF",
+        "ATTESTS"
+      ]
+    },
+    "derivedArtifact": {
+      "type": "boolean"
+    },
+    "staleWhenFromChanges": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "subjectDigest": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "dependencyDigest": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "lineageKind": {
+      "enum": [
+        "SOURCE",
+        "BUILD",
+        "DISTRIBUTION",
+        "DEPENDENCY",
+        "ATTESTATION"
+      ]
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources."
+}

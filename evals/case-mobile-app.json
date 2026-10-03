@@ -1,0 +1,10 @@
+{
+  "name": "mobile-app",
+  "description": "Benchmark scenario for Lullian",
+  "status": "active",
+  "known_facts": [
+    "mobile field use",
+    "offline operation",
+    "eventual synchronization"
+  ]
+}

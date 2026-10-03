@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:trace-link:v1",
+  "title": "Lullian Trace Link",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "from",
+    "to",
+    "relation"
+  ],
+  "properties": {
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relation": {
+      "enum": [
+        "SUPPORTS",
+        "DERIVED_FROM",
+        "IMPLEMENTS",
+        "VALIDATES",
+        "CONTRADICTS",
+        "DEPENDS_ON",
+        "SUPERSEDES",
+        "INVALIDATES"
+      ]
+    },
+    "note": {
+      "type": "string",
+      "minLength": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources."
+}

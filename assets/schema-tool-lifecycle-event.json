@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:tool-lifecycle-event:v1",
+  "title": "Lullian Tool Lifecycle Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "subjectRef",
+    "subjectKind",
+    "eventType",
+    "previousState",
+    "newState",
+    "source",
+    "occurredAt",
+    "causeRefs",
+    "evidenceRefs",
+    "sequence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subjectRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subjectKind": {
+      "const": "TOOL"
+    },
+    "eventType": {
+      "enum": [
+        "DRIFT_DETECTED",
+        "APPROVAL_EXPIRED",
+        "APPROVAL_REVOKED",
+        "SCOPE_CHANGED",
+        "DEPENDENCY_CHANGED",
+        "MCP_SURFACE_CHANGED",
+        "SCANNER_TRUST_CHANGED",
+        "INSTALLATION_MISMATCH",
+        "SECURITY_REVIEW_UPDATED",
+        "ADMISSION_CREATED",
+        "INSTALLATION_RECORDED",
+        "VERIFICATION_PASSED",
+        "VERIFICATION_FAILED",
+        "QUARANTINED",
+        "REMOVED",
+        "REVIEW_REQUIRED"
+      ]
+    },
+    "previousState": {
+      "type": "string",
+      "minLength": 1
+    },
+    "newState": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurredAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "causeRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

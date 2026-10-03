@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:installation-verification:v1",
+  "title": "Lullian Installation Verification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "installationRef",
+    "admissionPlanRef",
+    "expectedArtifactHash",
+    "observedArtifactHash",
+    "expectedRevision",
+    "observedRevision",
+    "verificationMethod",
+    "verifier",
+    "verifiedAt",
+    "result",
+    "evidenceRefs"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "installationRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "admissionPlanRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expectedArtifactHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "observedArtifactHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "expectedRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observedRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verificationMethod": {
+      "enum": [
+        "HASH_COMPARE",
+        "SIGNATURE_VERIFY",
+        "MANIFEST_COMPARE",
+        "EXTERNAL_ATTESTATION",
+        "OTHER"
+      ]
+    },
+    "verifier": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verifiedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "result": {
+      "enum": [
+        "PASS",
+        "MISMATCH",
+        "INCOMPLETE",
+        "ERROR"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "result": {
+            "const": "PASS"
+          }
+        },
+        "required": [
+          "result"
+        ]
+      },
+      "then": {
+        "properties": {
+          "expectedArtifactHash": {
+            "type": "string",
+            "pattern": "^[A-Fa-f0-9]{64}$"
+          }
+        }
+      }
+    }
+  ]
+}

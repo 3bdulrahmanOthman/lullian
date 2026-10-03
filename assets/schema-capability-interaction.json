@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:capability-interaction:v1",
+  "title": "Lullian Capability Interaction Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "capabilityRefs",
+    "riskFactors",
+    "interactionRuleRef",
+    "riskLevel",
+    "policyDecision",
+    "evidenceRefs"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capabilityRefs": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "riskFactors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "interactionRuleRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "riskLevel": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL",
+        "UNKNOWN"
+      ]
+    },
+    "policyDecision": {
+      "enum": [
+        "ALLOW",
+        "CAUTION",
+        "REQUIRES_HUMAN_REVIEW",
+        "BLOCK"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

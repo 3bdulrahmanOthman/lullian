@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:document:v1",
+  "title": "Lullian Document Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "path",
+    "kind",
+    "status",
+    "sourceRefs",
+    "owner"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "CANONICAL",
+        "SUMMARY",
+        "DERIVED",
+        "INDEX",
+        "HANDOFF",
+        "ASSESSMENT",
+        "OTHER"
+      ]
+    },
+    "status": {
+      "enum": [
+        "REQUIRED",
+        "PLANNED",
+        "COMPLETE",
+        "STALE",
+        "BLOCKED",
+        "SUPERSEDED"
+      ]
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonicalSource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

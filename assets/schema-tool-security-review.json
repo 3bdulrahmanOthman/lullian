@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:tool-security-review:v2",
+  "title": "Lullian Tool Security Review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "target",
+    "provenanceRef",
+    "scannerTrustRef",
+    "snapshotRef",
+    "scanEvidenceRef",
+    "scan",
+    "verdict"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenanceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scannerTrustRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "snapshotRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scanEvidenceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approvalRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scanner",
+        "version",
+        "mode",
+        "status",
+        "analysisComplete",
+        "reportHash"
+      ],
+      "properties": {
+        "scanner": {
+          "const": "NVIDIA_SKILLSPECTOR"
+        },
+        "version": {
+          "const": "2.11.2"
+        },
+        "mode": {
+          "const": "STATIC_NO_LLM"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FINDINGS",
+            "INCOMPLETE",
+            "ERROR"
+          ]
+        },
+        "analysisComplete": {
+          "type": "boolean"
+        },
+        "reportHash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "severity": {
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "CRITICAL",
+            "UNKNOWN"
+          ]
+        },
+        "exitCode": {
+          "type": "integer"
+        }
+      }
+    },
+    "verdict": {
+      "enum": [
+        "PENDING_USER_APPROVAL",
+        "CAUTION_HUMAN_REVIEW",
+        "BLOCKED_SECURITY",
+        "BLOCKED_SECURITY_UNVERIFIED",
+        "REJECTED",
+        "APPROVED"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "approvedBy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approvedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scopeRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scopeHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "dependencyAuditRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mcpSurfaceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capabilityInteractionRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subjectHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "policyRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "APPROVED"
+          }
+        },
+        "required": [
+          "verdict"
+        ]
+      },
+      "then": {
+        "required": [
+          "approvalRef",
+          "approvedBy",
+          "approvedAt",
+          "scopeRef",
+          "scopeHash",
+          "subjectHash",
+          "policyRevision"
+        ],
+        "properties": {
+          "scan": {
+            "properties": {
+              "status": {
+                "const": "PASS"
+              },
+              "analysisComplete": {
+                "const": true
+              },
+              "severity": {
+                "enum": [
+                  "LOW"
+                ]
+              },
+              "exitCode": {
+                "const": 0
+              }
+            }
+          },
+          "findings": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "PENDING_USER_APPROVAL"
+          }
+        },
+        "required": [
+          "verdict"
+        ]
+      },
+      "then": {
+        "required": [
+          "scopeRef",
+          "scopeHash",
+          "subjectHash",
+          "policyRevision"
+        ],
+        "properties": {
+          "scan": {
+            "properties": {
+              "status": {
+                "const": "PASS"
+              },
+              "analysisComplete": {
+                "const": true
+              },
+              "severity": {
+                "enum": [
+                  "LOW"
+                ]
+              },
+              "exitCode": {
+                "const": 0
+              }
+            }
+          },
+          "findings": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scan": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "INCOMPLETE",
+                  "ERROR"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "scan"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verdict": {
+            "enum": [
+              "BLOCKED_SECURITY_UNVERIFIED",
+              "REJECTED"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scan": {
+            "properties": {
+              "status": {
+                "const": "PASS"
+              }
+            }
+          }
+        },
+        "required": [
+          "scan"
+        ]
+      },
+      "then": {
+        "properties": {
+          "scan": {
+            "required": [
+              "severity",
+              "exitCode",
+              "analysisComplete"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

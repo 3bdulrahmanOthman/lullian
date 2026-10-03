@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:scan-evidence:v2",
+  "title": "Lullian Security Scan Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "target",
+    "scannerTrustRef",
+    "targetHash",
+    "scannerTrustHash",
+    "reportHash",
+    "reportRef",
+    "snapshotRef",
+    "mode",
+    "status",
+    "analysisComplete",
+    "scannedAt",
+    "analysisCompleteness",
+    "analysisMode"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scannerTrustRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "reportHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "reportRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "snapshotRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "const": "STATIC_NO_LLM"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "FINDINGS",
+        "INCOMPLETE",
+        "ERROR"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL",
+        "UNKNOWN"
+      ]
+    },
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "analysisComplete": {
+      "type": "boolean"
+    },
+    "scannerExitCode": {
+      "type": "integer"
+    },
+    "scannedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "invocationHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "scannerTrustHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "snapshotArchiveHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "snapshotArchiveRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "analysisCompleteness": {
+      "enum": [
+        "COMPLETE",
+        "PARTIAL",
+        "UNRESOLVED"
+      ]
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "filesInspected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "totalFiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bytesInspected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "totalBytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "analysisMode": {
+      "enum": [
+        "STATIC_NO_LLM",
+        "STATIC_LLM_ASSISTED",
+        "EXTERNAL_RUNTIME"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "analysisComplete": {
+            "const": false
+          }
+        },
+        "required": [
+          "analysisComplete"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "enum": [
+              "INCOMPLETE",
+              "ERROR"
+            ]
+          },
+          "analysisCompleteness": {
+            "enum": [
+              "PARTIAL",
+              "UNRESOLVED"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "ERROR"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "analysisComplete": {
+            "const": false
+          },
+          "analysisCompleteness": {
+            "enum": [
+              "PARTIAL",
+              "UNRESOLVED"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "PASS"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "analysisComplete": {
+            "const": true
+          },
+          "analysisCompleteness": {
+            "const": "COMPLETE"
+          },
+          "scannerExitCode": {
+            "const": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "analysisMode": {
+            "const": "STATIC_NO_LLM"
+          }
+        },
+        "required": [
+          "analysisMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "mode": {
+            "const": "STATIC_NO_LLM"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:evidence:v1",
+  "title": "Lullian Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "claim",
+    "class",
+    "status",
+    "confidence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1
+    },
+    "class": {
+      "enum": [
+        "USER_FACT",
+        "REPO_FACT",
+        "OFFICIAL_SOURCE",
+        "TRUSTED_SECONDARY",
+        "INFERENCE",
+        "ASSUMPTION",
+        "UNKNOWN"
+      ]
+    },
+    "status": {
+      "enum": [
+        "CONFIRMED",
+        "QUALIFIED",
+        "CONFLICTING",
+        "STALE",
+        "UNVERIFIED"
+      ]
+    },
+    "confidence": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrievedAt": {
+          "type": "string",
+          "minLength": 1,
+          "format": "date-time"
+        },
+        "publishedAt": {
+          "type": "string",
+          "minLength": 1,
+          "format": "date-time"
+        },
+        "contentHash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        }
+      }
+    },
+    "supports": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "contradicts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "freshness": {
+      "enum": [
+        "LIVE",
+        "CURRENT",
+        "RECENT",
+        "EVERGREEN",
+        "UNKNOWN"
+      ]
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "enum": [
+              "OFFICIAL_SOURCE",
+              "TRUSTED_SECONDARY"
+            ]
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "required": [
+          "source"
+        ],
+        "properties": {
+          "source": {
+            "required": [
+              "url",
+              "publisher",
+              "retrievedAt"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "class": {
+            "const": "REPO_FACT"
+          }
+        },
+        "required": [
+          "class"
+        ]
+      },
+      "then": {
+        "required": [
+          "source"
+        ],
+        "properties": {
+          "source": {
+            "required": [
+              "retrievedAt"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "CONFIRMED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "not": {
+          "properties": {
+            "class": {
+              "const": "UNKNOWN"
+            }
+          },
+          "required": [
+            "class"
+          ]
+        }
+      }
+    }
+  ]
+}

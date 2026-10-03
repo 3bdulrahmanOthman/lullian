@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:requirement:v1",
+  "title": "Lullian Requirement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "statement",
+    "priority",
+    "status",
+    "sourceRefs",
+    "acceptance"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "userOrActor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "why": {
+      "type": "string",
+      "minLength": 1
+    },
+    "priority": {
+      "enum": [
+        "MUST",
+        "SHOULD",
+        "COULD",
+        "OUT_OF_SCOPE"
+      ]
+    },
+    "status": {
+      "enum": [
+        "DRAFT",
+        "VALIDATED",
+        "IMPLEMENTATION_READY",
+        "SUPERSEDED",
+        "REJECTED"
+      ]
+    },
+    "acceptance": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "qualityAttributes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "traceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "supersedes": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "SUPERSEDED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "supersedes"
+        ]
+      }
+    }
+  ]
+}

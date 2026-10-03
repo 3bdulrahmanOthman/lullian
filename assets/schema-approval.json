@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:approval:v2",
+  "title": "Lullian Approval — exact admission binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "artifactId",
+    "owner",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifactId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approver": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "APPROVED",
+        "EXPIRED",
+        "REVOKED",
+        "REJECTED",
+        "SUPERSEDED"
+      ]
+    },
+    "approvedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scopeRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scopeHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "admissionPlanRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "admissionPlanHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "artifactHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "policyRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reapprovalTriggers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reviewDisposition": {
+      "enum": [
+        "NONE",
+        "REQUIRES_REVIEW"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "supersedes": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "APPROVED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "approver",
+          "approvedAt",
+          "scope",
+          "scopeRef",
+          "scopeHash",
+          "admissionPlanRef",
+          "admissionPlanHash",
+          "artifactHash",
+          "policyRevision"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "EXPIRED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "expiresAt"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "REVOKED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "approver",
+          "notes"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "REJECTED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "approver",
+          "notes"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "SUPERSEDED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "supersedes",
+          "notes"
+        ]
+      }
+    }
+  ],
+  "$comment": "Offline-safe schema; approval is bound to an exact admission plan and scope context."
+}

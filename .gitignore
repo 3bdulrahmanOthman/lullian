@@ -1,0 +1,38 @@
+# Internal release / audit artifacts
+PRE-RELEASE-AUDIT-*.md
+PRE-RELEASE-EXTERNAL-VALIDATION-*.md
+PRE-RELEASE-FINAL-*.md
+
+# Internal forensic / validation reports
+FORENSIC-CODE-AUDIT-*.md
+FORENSIC-COVERAGE.md
+VALIDATION-REPORT.md
+CONTRACT-MATRIX.md
+PUBLIC-PACKAGE-FINAL-*.md
+PUBLIC-RELEASE-CANDIDATE-*.md
+
+# Raw external validation evidence
+external-validation-evidence/
+
+# Local / private release material
+release-packet/
+external-validation-ci/*.whl
+
+# Secrets and local environment files
+.env
+.env.*
+*.p12
+*.pfx
+
+# Private signing keys only (public verification material stays tracked)
+**/release-signing-key.pem
+
+# Python / runtime noise
+__pycache__/
+*.py[cod]
+*.pyo
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini

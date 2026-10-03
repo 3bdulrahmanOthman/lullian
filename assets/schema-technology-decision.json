@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:technology-decision:v1",
+  "title": "Lullian Technology Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "category",
+    "selected",
+    "status",
+    "evidenceRefs",
+    "owner"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "selected": {
+      "type": "string",
+      "minLength": 1
+    },
+    "why": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tradeoffs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "cost": {
+      "type": "string",
+      "minLength": 1
+    },
+    "selfHostable": {
+      "type": "boolean"
+    },
+    "aiSupport": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lockIn": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "status": {
+      "enum": [
+        "PROPOSED",
+        "CONDITIONAL",
+        "LOCKED",
+        "DEFERRED",
+        "REJECTED",
+        "SUPERSEDED"
+      ]
+    },
+    "migrationImplications": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approver": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approvalRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lockedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "supersedes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "LOCKED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "approver",
+          "approvalRef",
+          "lockedAt"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "SUPERSEDED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "supersedes"
+        ]
+      }
+    }
+  ]
+}

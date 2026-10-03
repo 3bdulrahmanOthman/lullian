@@ -1,0 +1,10 @@
+{
+  "name": "api-platform",
+  "description": "Benchmark scenario for Lullian",
+  "status": "active",
+  "known_facts": [
+    "external API consumers",
+    "public SDK",
+    "long-lived compatibility expectations"
+  ]
+}

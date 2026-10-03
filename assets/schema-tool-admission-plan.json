@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:tool-admission-plan:v1",
+  "title": "Lullian Tool Admission Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "toolRef",
+    "provenanceRef",
+    "snapshotRef",
+    "artifactHash",
+    "revision",
+    "scopeRef",
+    "scopeHash",
+    "securityReviewRef",
+    "policyRevision",
+    "installationMethod",
+    "verificationRequirements",
+    "reapprovalTriggers",
+    "createdAt",
+    "planHash"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "toolRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenanceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "snapshotRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifactHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scopeRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scopeHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "securityReviewRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dependencyAuditRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mcpSurfaceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capabilityInteractionRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policyRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "installationMethod": {
+      "enum": [
+        "EXTERNAL_EXECUTOR",
+        "HOST_REGISTRATION",
+        "OTHER"
+      ]
+    },
+    "verificationRequirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reapprovalTriggers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "planHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "requiredEvidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "rollbackCondition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

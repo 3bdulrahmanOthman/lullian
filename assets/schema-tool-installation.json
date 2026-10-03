@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:tool-installation:v2",
+  "title": "Lullian Tool Installation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "toolRef",
+    "provenanceRef",
+    "securityReviewRef",
+    "snapshotRef",
+    "approvalRef",
+    "admissionPlanRef",
+    "installedAt",
+    "installedContentHash",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "toolRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenanceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "securityReviewRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "snapshotRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "approvalRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "admissionPlanRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "installedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "installedContentHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "expectedArtifactHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "expectedRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observedRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "location": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "INSTALLED",
+        "REMOVED",
+        "QUARANTINED"
+      ]
+    },
+    "verificationRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "INSTALLED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "location",
+          "expectedArtifactHash",
+          "expectedRevision"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "QUARANTINED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "notes"
+        ]
+      }
+    }
+  ]
+}

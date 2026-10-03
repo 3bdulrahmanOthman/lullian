@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:release-attestation:v1",
+  "title": "Lullian External Release Attestation Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "subjectType",
+    "subjectDigest",
+    "attestationType",
+    "issuer",
+    "createdAt",
+    "verificationStatus",
+    "evidenceRef"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subjectType": {
+      "enum": [
+        "PACKAGE",
+        "ARCHIVE",
+        "DIRECTORY"
+      ]
+    },
+    "subjectDigest": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "attestationType": {
+      "enum": [
+        "SLSA_PROVENANCE",
+        "IN_TOTO",
+        "SIGSTORE",
+        "GITHUB_ARTIFACT_ATTESTATION",
+        "OMS",
+        "OTHER"
+      ]
+    },
+    "issuer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "predicateType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verificationStatus": {
+      "enum": [
+        "UNVERIFIED",
+        "VERIFIED",
+        "FAILED"
+      ]
+    },
+    "evidenceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "signatureRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

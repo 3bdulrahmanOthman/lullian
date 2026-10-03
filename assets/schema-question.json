@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:question:v1",
+  "title": "Lullian Clarification Question",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "question",
+    "targetUnknown",
+    "impact",
+    "expectedValue",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetUnknown": {
+      "type": "string",
+      "minLength": 1
+    },
+    "impact": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "expectedValue": {
+      "type": "number",
+      "minimum": 0
+    },
+    "answerEffort": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "researchAlternativeAvailable": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "CANDIDATE",
+        "ASKED",
+        "ANSWERED",
+        "DEFERRED",
+        "REJECTED"
+      ]
+    },
+    "answer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "answerSourceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "ANSWERED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "answer",
+          "answerSourceRefs"
+        ]
+      }
+    }
+  ]
+}

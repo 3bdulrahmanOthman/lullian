@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:project-intake:v1",
+  "title": "Lullian Project Intake",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "projectType",
+    "objective",
+    "mode"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectType": {
+      "enum": [
+        "saas",
+        "web-app",
+        "mobile-app",
+        "desktop-app",
+        "api-platform",
+        "library",
+        "cli",
+        "game",
+        "internal-tool",
+        "data-system",
+        "other"
+      ]
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "greenfield",
+        "brownfield",
+        "hybrid"
+      ]
+    },
+    "maturity": {
+      "type": "string",
+      "minLength": 1
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "businessModel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources."
+}

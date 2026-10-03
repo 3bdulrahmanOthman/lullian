@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:dependency-audit:v1",
+  "title": "Lullian Dependency Audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "targetRef",
+    "ecosystem",
+    "analysisCompleteness",
+    "scanner",
+    "scannerVersion",
+    "resolvedDependencies",
+    "scannedAt",
+    "resolutionSource"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ecosystem": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lockfileRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lockfileHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "resolvedDependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "version"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^[A-Fa-f0-9]{64}$"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "transitiveRelationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from",
+          "to"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "scanner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scannerVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "severity"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL",
+              "UNKNOWN"
+            ]
+          },
+          "package": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "reason",
+          "scope",
+          "expiresAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "analysisCompleteness": {
+      "enum": [
+        "COMPLETE",
+        "PARTIAL",
+        "UNRESOLVED",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "resolutionSource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scannedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}

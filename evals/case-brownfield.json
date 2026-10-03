@@ -1,0 +1,10 @@
+{
+  "name": "brownfield",
+  "description": "Benchmark scenario for Lullian",
+  "status": "active",
+  "known_facts": [
+    "existing repository",
+    "docs/code mismatch may exist",
+    "desired change requires preservation of current behavior unless intentionally changed"
+  ]
+}

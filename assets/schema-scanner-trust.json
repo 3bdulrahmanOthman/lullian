@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:scanner-trust:v2",
+  "title": "Lullian Scanner Trust Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "scanner",
+    "publisher",
+    "version",
+    "releaseRef",
+    "executableHash",
+    "binaryPathPolicy",
+    "verifiedBy",
+    "verifiedAt",
+    "trustStatus",
+    "trustBasis"
+  ],
+  "properties": {
+    "scanner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "publisher": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "releaseRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "executableHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "binaryPathPolicy": {
+      "enum": [
+        "PINNED_FILE"
+      ]
+    },
+    "verifiedBy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verifiedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "signatureRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trustStatus": {
+      "enum": [
+        "TRUSTED",
+        "REVOKED"
+      ]
+    },
+    "releaseHash": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "verificationEvidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "validUntil": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "supersedesRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trustBasis": {
+      "enum": [
+        "PUBLISHED_RELEASE",
+        "SIGNED_RELEASE",
+        "VERIFIED_EXECUTABLE",
+        "OTHER"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scanner": {
+            "const": "NVIDIA_SKILLSPECTOR"
+          },
+          "publisher": {
+            "const": "NVIDIA"
+          },
+          "version": {
+            "const": "2.11.2"
+          }
+        },
+        "required": [
+          "scanner",
+          "publisher",
+          "version"
+        ]
+      },
+      "then": {
+        "properties": {
+          "trustStatus": {
+            "const": "TRUSTED"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "trustStatus": {
+            "const": "TRUSTED"
+          }
+        },
+        "required": [
+          "trustStatus"
+        ]
+      },
+      "then": {
+        "required": [
+          "verificationEvidenceRefs"
+        ]
+      }
+    }
+  ]
+}

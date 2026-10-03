@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:architecture:v1",
+  "title": "Lullian Architecture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "style",
+    "boundaries",
+    "domains",
+    "integrations",
+    "qualityAttributes",
+    "decisionRefs",
+    "deploymentSummary",
+    "securityBoundaries",
+    "failureModes"
+  ],
+  "properties": {
+    "style": {
+      "type": "string",
+      "minLength": 1
+    },
+    "boundaries": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "dataModelSummary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "qualityAttributes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "decisionRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "deploymentSummary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "securityBoundaries": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "failureModes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$comment": "Offline-safe schema identifier; local validation must not fetch network resources."
+}

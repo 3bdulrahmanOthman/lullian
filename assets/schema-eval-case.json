@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:eval-case:v2",
+  "title": "Lullian Behavioral Eval Case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "prompt",
+    "expected_output",
+    "assertions",
+    "executableAssertions"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "executableAssertions": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "value"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "MUST_CONTAIN",
+              "MUST_NOT_CONTAIN",
+              "MUST_MATCH",
+              "MUST_NOT_MATCH",
+              "MAX_QUESTIONS"
+            ]
+          },
+          "value": {
+            "type": [
+              "string",
+              "integer"
+            ]
+          },
+          "flags": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "expected_output": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "enum": [
+        "CORE",
+        "GOVERNANCE",
+        "SECURITY",
+        "MCP",
+        "SUPPLY_CHAIN"
+      ]
+    },
+    "fixtureOutput": {
+      "type": "string"
+    },
+    "externalExportHint": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "taskType": {
+          "type": "string"
+        },
+        "sandboxRequired": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

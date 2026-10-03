@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:research-usage:v1",
+  "title": "Lullian Research Usage Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "planRef",
+    "queriesUsed",
+    "sourcesUsed",
+    "elapsedSeconds",
+    "withinBudget"
+  ],
+  "properties": {
+    "planRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "queriesUsed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sourcesUsed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "elapsedSeconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "withinBudget": {
+      "type": "boolean"
+    },
+    "egressApproved": {
+      "type": "boolean"
+    },
+    "recordedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

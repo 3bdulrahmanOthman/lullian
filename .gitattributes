@@ -1,0 +1,20 @@
+# Line-ending policy: LF for all text sources, explicit binary for assets.
+# Repository-only file; never part of the shipped skill artifact.
+
+# Text sources — always LF, on every platform
+*.md   text eol=lf
+*.py   text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.sh   text eol=lf
+Dockerfile text eol=lf
+LICENSE text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# Binary assets — never diff, merge, or normalize
+*.png  binary
+*.whl  binary
+*.tar  binary
+*.pem  binary

@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lullian:schema:tool:v2",
+  "title": "Lullian Skill or MCP Tool — v0.4 governance record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "type",
+    "capability",
+    "status",
+    "effectiveStatus",
+    "activationCondition",
+    "provenanceRef",
+    "securityReviewRef",
+    "trustLevel"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "enum": [
+        "SKILL",
+        "MCP",
+        "LIBRARY",
+        "SERVICE",
+        "CLI",
+        "OTHER"
+      ]
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "RECOMMENDED",
+        "AVAILABLE",
+        "BLOCKED",
+        "OPTIONAL",
+        "REJECTED",
+        "PENDING_REVIEW",
+        "CANDIDATE",
+        "PENDING_INSTALLATION",
+        "PENDING_VERIFICATION",
+        "STALE",
+        "REQUIRES_REVIEW",
+        "QUARANTINED",
+        "REMOVED"
+      ],
+      "description": "Legacy declared-status compatibility field. Never treated as proof of effective availability."
+    },
+    "activationCondition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contextCost": {
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "UNKNOWN"
+      ]
+    },
+    "trustLevel": {
+      "enum": [
+        "AUTHOR_VERIFIED",
+        "SCANNED_PENDING_APPROVAL",
+        "APPROVED",
+        "UNVERIFIED",
+        "REJECTED"
+      ]
+    },
+    "versionPolicy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "provenanceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "securityReviewRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "snapshotRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "installationRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effectiveStatus": {
+      "enum": [
+        "CANDIDATE",
+        "PENDING_REVIEW",
+        "PENDING_INSTALLATION",
+        "PENDING_VERIFICATION",
+        "AVAILABLE",
+        "STALE",
+        "REQUIRES_REVIEW",
+        "QUARANTINED",
+        "REMOVED"
+      ]
+    },
+    "reviewDisposition": {
+      "enum": [
+        "NONE",
+        "BLOCKED",
+        "CAUTION_HUMAN_REVIEW",
+        "REJECTED",
+        "REQUIRES_REVIEW"
+      ]
+    },
+    "blockedReasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "scopeRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "admissionPlanRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "installationVerificationRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lifecycleEventRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "dependencyAuditRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mcpSurfaceRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capabilityInteractionRef": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "reviewDisposition": {
+            "const": "BLOCKED"
+          }
+        },
+        "required": [
+          "reviewDisposition"
+        ]
+      },
+      "then": {
+        "required": [
+          "blockedReasons"
+        ],
+        "properties": {
+          "blockedReasons": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "effectiveStatus": {
+            "const": "AVAILABLE"
+          }
+        },
+        "required": [
+          "effectiveStatus"
+        ]
+      },
+      "then": {
+        "required": [
+          "scopeRef",
+          "admissionPlanRef",
+          "installationRef",
+          "installationVerificationRef",
+          "snapshotRef"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "effectiveStatus": {
+            "const": "PENDING_INSTALLATION"
+          }
+        },
+        "required": [
+          "effectiveStatus"
+        ]
+      },
+      "then": {
+        "required": [
+          "scopeRef",
+          "admissionPlanRef"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "effectiveStatus": {
+            "const": "PENDING_VERIFICATION"
+          }
+        },
+        "required": [
+          "effectiveStatus"
+        ]
+      },
+      "then": {
+        "required": [
+          "scopeRef",
+          "admissionPlanRef",
+          "installationRef"
+        ]
+      }
+    }
+  ]
+}
